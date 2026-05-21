@@ -22,6 +22,13 @@
       <option value="ventoux">Mont Ventoux</option>
     </select>
   </div>
+  <div id="custom_ui_panel" style="display: none;">
+    <label for="z_slider" style="color: white; font-family: sans-serif; display: block; margin-bottom: 5px;">
+      Z-Slice Height: <span id="z_value_display">0.0m</span>
+    </label>
+    <input type="range" id="z_slider" step="0.5" style="width: 100%;">
+  </div>
+  <div class="potree_container" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;">
   <div class="potree_container" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;">
     <div id="potree_render_area" style="background: #0b0f14;"></div>
     <div id="potree_sidebar_container"></div>
@@ -40,6 +47,7 @@
   <script src="./potree/libs/jstree/jstree.js"></script>
   
   <!-- Potree Scripts -->
+  <script src="./potree/libs/three.js/build/three.min.js"></script>
   <script src="./potree/libs/copc/index.js"></script>
   <script src="./potree/build/potree/potree.js"></script>
   <script src="./potree/libs/plasio/js/laslaz.js"></script>
