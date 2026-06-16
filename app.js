@@ -7,7 +7,7 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
 
   const demos = {
     groningen: {
-      description: "This demo showcases a viewshed analysis performed on a point cloud of the city of Groningen. The viewshed analysis determines which parts of the city are visible from a specific viewpoint, taking into account the 3D geometry of the environment. The results are visualized using a color gradient, where blue points are not visible from the viewpoint, yellow points are partially visible, and red points are fully visible.",
+      description: "This demo showcases a viewshed analysis performed on a point cloud of the city of Groningen. The viewshed analysis determines which parts of the city are visible from a specific viewpoint, taking into account the 3D geometry of the environment. The results are visualized using a color gradient.",
       files: [
         {
           name: 'Input Point Cloud',
@@ -65,7 +65,7 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
       ],
     },
     delft: {
-      description: "This demo showcases a viewshed analysis performed on a point cloud of the TU Delft campus. The viewshed analysis determines which parts of the campus are visible from a specific viewpoint, taking into account the 3D geometry of the environment. The results are visualized using a color gradient, where blue points are not visible from the viewpoint, yellow points are partially visible, and red points are fully visible. Additionally, this demo includes an interactive Z-slicing feature that allows users to explore the vertical distribution of visibility within the point cloud.",
+      description: "This demo showcases a viewshed analysis performed on a point cloud of the TU Delft campus. The viewshed analysis determines which parts of the campus are visible from a specific viewpoint, taking into account the 3D geometry of the environment. The results are visualized using a color gradient. Additionally, this demo includes an interactive Z-slicing feature that allows users to explore the vertical distribution of visibility within the point cloud.",
       files: [
         {
           name: 'Input Point Cloud',
@@ -194,7 +194,7 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
       ],
     },
     ventoux: {
-      description: "This demo showcases a point cloud of Mont Ventoux, a prominent mountain in the Provence region of France. The point cloud captures the rugged terrain and natural features of the mountain, allowing users to explore its topography and vegetation in detail. The points are colored based on their classification, enabling users to distinguish between different types of surfaces such as ground, vegetation, and buildings.",
+      description: "This demo showcases a point cloud of Mont Ventoux, a prominent mountain in the Provence region of France. By default, the points are colored based on their classification.",
       files: [
         {
           name: 'Input Point Cloud',
