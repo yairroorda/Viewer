@@ -104,3 +104,38 @@ html, body { height: 100%; margin: 0; }
     margin: 0;
 }
 
+/* --- Visibility Legend --- */
+#visibility_legend {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex; /* Aligns the text and color bar in a row */
+    align-items: center;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: rgba(11, 15, 20, 0.88);
+    color: #e6edf3;
+    font: 13px/1.2 sans-serif;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    pointer-events: none; /* Ensures you can still click and drag the 3D scene underneath it */
+}
+
+#legend_gradient {
+    width: 200px;
+    height: 12px;
+    border-radius: 6px;
+    /* This exactly matches the THREE.Color gradient from your app.js */
+    background: linear-gradient(to right, rgb(0, 0, 255) 0%, rgb(255, 255, 0) 50%, rgb(255, 0, 0) 100%);
+    margin: 0 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.legend-label {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}

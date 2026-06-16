@@ -231,6 +231,11 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
 
     const demo = demos[name] || demos.groningen;
 
+    const legend = document.getElementById('visibility_legend');
+    if (legend) {
+        legend.style.display = (name === 'ventoux') ? 'none' : 'flex';
+    }
+
     const infoText = document.getElementById('demo_info_text');
     const infoPanel = document.getElementById('demo_info_panel');
     const infoButton = document.getElementById('demo_info_button');
