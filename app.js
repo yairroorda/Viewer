@@ -7,8 +7,10 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
 
   const demos = {
     groningen: {
+      description: "This demo showcases a viewshed analysis performed on a point cloud of the city of Groningen. The viewshed analysis determines which parts of the city are visible from a specific viewpoint, taking into account the 3D geometry of the environment. The results are visualized using a color gradient, where blue points are not visible from the viewpoint, yellow points are partially visible, and red points are fully visible.",
       files: [
         {
+          name: 'Input Point Cloud',
           path: './data/groningen/facades.copc.laz',
           type: 'COPC',
           apply(pointcloud) {
@@ -18,6 +20,7 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
           },
         },
         {
+          name: 'Target Point',
           path: './data/groningen/target_point.copc.laz',
           type: 'COPC',
           apply(pointcloud, viewer) {
@@ -40,6 +43,7 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
           },
         },
         {
+          name: 'Viewshed Results',
           path: './data/groningen/viewshed_2d.copc.laz',
           type: 'COPC',
           apply(pointcloud) {
@@ -61,8 +65,10 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
       ],
     },
     delft: {
+      description: "This demo showcases a viewshed analysis performed on a point cloud of the TU Delft campus. The viewshed analysis determines which parts of the campus are visible from a specific viewpoint, taking into account the 3D geometry of the environment. The results are visualized using a color gradient, where blue points are not visible from the viewpoint, yellow points are partially visible, and red points are fully visible. Additionally, this demo includes an interactive Z-slicing feature that allows users to explore the vertical distribution of visibility within the point cloud.",
       files: [
         {
+          name: 'Input Point Cloud',
           path: './data/bouwkunde/facades.copc.laz',
           type: 'COPC',
           apply(pointcloud) {
@@ -78,6 +84,7 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
           },
         },
         {
+          name: 'Target Point',
           path: './data/bouwkunde/target_point.copc.laz',
           type: 'COPC',
           apply(pointcloud, viewer) {
@@ -100,6 +107,7 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
           },
         },
         {
+          name: 'Viewshed Results',
           path: './data/bouwkunde/viewshed_3d_voxel.copc.laz',
           type: 'COPC',
           apply(pointcloud, viewer) {
@@ -161,6 +169,7 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
           },
         },
         {
+          name: 'Optimal Path',
           path: './data/bouwkunde/optimal_path.copc.laz',
           type: 'COPC',
           apply(pointcloud) {
@@ -185,8 +194,10 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
       ],
     },
     ventoux: {
+      description: "This demo showcases a point cloud of Mont Ventoux, a prominent mountain in the Provence region of France. The point cloud captures the rugged terrain and natural features of the mountain, allowing users to explore its topography and vegetation in detail. The points are colored based on their classification, enabling users to distinguish between different types of surfaces such as ground, vegetation, and buildings.",
       files: [
         {
+          name: 'Input Point Cloud',
           path: './data/ventoux/facades.copc.laz',
           type: 'COPC',
           apply(pointcloud) {
@@ -220,8 +231,27 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
 
     const demo = demos[name] || demos.groningen;
 
+    const infoText = document.getElementById('demo_info_text');
+    const infoPanel = document.getElementById('demo_info_panel');
+    const infoButton = document.getElementById('demo_info_button');
+    
+    // Set the text for the current demo
+    if (infoText) infoText.innerText = demo.description || "No description available.";
+    
+    // Ensure we don't attach multiple event listeners if loadDemo is called multiple times
+    const newButton = infoButton.cloneNode(true);
+    infoButton.parentNode.replaceChild(newButton, infoButton);
+    
+    newButton.addEventListener('click', () => {
+      if (infoPanel.style.display === 'none') {
+        infoPanel.style.display = 'block';
+      } else {
+        infoPanel.style.display = 'none';
+      }
+    });
+
     for (const item of demo.files) {
-      Potree.loadPointCloud(item.path, item.type, (event) => {
+      Potree.loadPointCloud(item.path, item.name, (event) => {
         const pointcloud = event.pointcloud;
         item.apply(pointcloud, viewer);
         viewer.scene.addPointCloud(pointcloud);
@@ -241,6 +271,7 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
   viewer.setPointBudget(3_000_000);
   viewer.setEDLEnabled(false);
   viewer.loadSettingsFromURL();
+  viewer.setBackground("white");
 
   viewer.loadGUI(() => {
     viewer.setLanguage('en');

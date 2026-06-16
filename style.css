@@ -56,3 +56,51 @@ html, body { height: 100%; margin: 0; }
 #custom_ui_panel label {
   text-align: center;
 }
+
+#demo_info_container {
+    position: fixed;
+    top: 12px;
+    right: 20px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#demo_info_button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(11, 15, 20, 0.88);
+    color: #e6edf3;
+    font: italic bold 16px/30px serif;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    user-select: none;
+    transition: background 0.2s;
+}
+
+#demo_info_button:hover {
+    background: rgba(30, 40, 50, 0.88);
+}
+
+#demo_info_panel {
+    margin-top: 10px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: rgba(11, 15, 20, 0.88);
+    color: #e6edf3;
+    font: 16px/1.4 sans-serif;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    max-width: 400px;
+}
+
+#demo_info_text {
+    margin: 0;
+}
+
