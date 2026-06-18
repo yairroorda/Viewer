@@ -7,7 +7,7 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
 
   const demos = {
     groningen: {
-      description: "This demo showcases a viewshed analysis performed on a point cloud of the city of Groningen. The viewshed analysis determines which parts of the city are visible from a specific viewpoint, taking into account the 3D geometry of the environment. The results are visualized using a color gradient.",
+      description: "This demo showcases a viewshed analysis performed on a point cloud of the city of Groningen. The viewshed analysis determines which parts of the area of interest are visible from a viewpoint defined at eye-level, taking into account the 3D geometry of the environment. The results are visualized using a color gradient.",
       files: [
         {
           name: 'Input Point Cloud',
@@ -65,7 +65,7 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
       ],
     },
     delft: {
-      description: "This demo showcases a viewshed analysis performed on a point cloud of the TU Delft campus. The viewshed analysis determines which parts of the campus are visible from a specific viewpoint, taking into account the 3D geometry of the environment. The results are visualized using a color gradient. Additionally, this demo includes an interactive Z-slicing feature that allows users to explore the vertical distribution of visibility within the point cloud.",
+      description: "This demo showcases a viewshed analysis performed on a point cloud of the TU Delft Architecture Faculty. The viewshed analysis determines which parts of the campus are visible from a specific viewpoint, taking into account the 3D geometry of the environment. The results are visualized using a color gradient. Additionally, this demo includes an interactive Z-slicing feature that allows users to explore the vertical distribution of visibility within the point cloud. Finally, it includes one example of a route between two arbitrary points extracted directly from the 3D viewshed.",
       files: [
         {
           name: 'Input Point Cloud',
@@ -194,7 +194,7 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
       ],
     },
     ventoux: {
-      description: "This demo showcases a point cloud of Mont Ventoux, a prominent mountain in the Provence region of France. By default, the points are colored based on their classification.",
+      description: "This demo showcases a point cloud of Mont Ventoux, the input points are colored based on their classification. The heatmap shows the visibility of the path on the mountain from each lookout point.",
       files: [
         {
           name: 'Input Point Cloud',
@@ -207,6 +207,27 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
             pointcloud.material.activeAttributeName = 'classification';
           },
         },
+        {
+          name: 'Viewshed Grid Heatmap',
+          path: './data/ventoux/lookout_heatmap_grid.copc.laz',
+          type: 'COPC',
+          apply(pointcloud) {
+            pointcloud.material.size = 10.0; 
+            pointcloud.material.pointSizeType = Potree.PointSizeType.FIXED;
+            pointcloud.material.shape = Potree.PointShape.ROUND;
+
+            // Direct the shader to use the hijacked intensity channel
+            pointcloud.material.activeAttributeName = 'intensity gradient';
+            pointcloud.material.intensityRange = [0, 65535];
+            
+            const color = pointcloud.material.color.constructor;
+            pointcloud.material.gradient = [
+              [0.0, new color(0, 0, 1.0)],     // Blue (0% Visible)
+              [0.5, new color(1.0, 1.0, 0.0)], // Yellow (50% Visible)
+              [1.0, new color(1.0, 0.0, 0.0)], // Red (100% Visible)
+            ];
+          },
+        }
       ],
     },
   };
@@ -233,7 +254,17 @@ Potree.scriptPath = new URL("./potree/build/potree", window.location.href).href;
 
     const legend = document.getElementById('visibility_legend');
     if (legend) {
-        legend.style.display = (name === 'ventoux') ? 'none' : 'flex';
+        legend.style.display = 'flex';
+                const labels = legend.querySelectorAll('.legend-label');
+        if (labels.length === 2) {
+            if (name === 'ventoux') {
+                labels[0].innerText = '0% of path visible';
+                labels[1].innerText = '100% of path visible';
+            } else {
+                labels[0].innerText = '0 (Blocked)';
+                labels[1].innerText = '1 (Visible)';
+            }
+        }
     }
 
     const infoText = document.getElementById('demo_info_text');
